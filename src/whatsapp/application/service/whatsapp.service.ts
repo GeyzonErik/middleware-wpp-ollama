@@ -17,9 +17,6 @@ export class WhatsappService {
     await this.onMessage.execute(async (message) => {
       const messageType = Object.keys(message.message)[0] || null;
 
-      console.log(messageType);
-      console.log(message.message);
-
       if (!message.key.fromMe) {
         if (messageType === 'conversation' || 'extendedTextMessage') {
           const text =
