@@ -1,5 +1,5 @@
 import { Controller, Get, Post } from '@nestjs/common';
-import { WhatsappService } from '../application/services/whatsapp.service';
+import { WhatsappService } from 'src/whatsapp/application/service/whatsapp.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('whatsapp')
@@ -14,7 +14,7 @@ export class WhatsappController {
 
   @Post('init')
   async initBot() {
-    await this.whatsappService.connect();
+    await this.whatsappService.init();
     return { message: 'Bot initialized' };
   }
 }
