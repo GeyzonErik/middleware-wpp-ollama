@@ -46,8 +46,11 @@ export class BaileysGateway implements ChatAddapter {
   onMessage(callback: (message: any) => void): void {
     this.socket.ev.on('messages.upsert', (m) => {
       const message = m.messages[0];
-      if (!message.key.fromMe) {
-        callback(message);
+
+      if (message.key.remoteJid !== 'status@broadcast') {
+        if (!message.key.fromMe) {
+          callback(message);
+        }
       }
     });
   }
