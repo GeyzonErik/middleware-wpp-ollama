@@ -17,8 +17,9 @@ export class WhatsappService {
     await this.onMessage.execute(async (message) => {
       const messageType = Object.keys(message.message)[0] || null;
 
-      if (!message.key.fromMe) {
-        if (messageType === 'conversation' || 'extendedTextMessage') {
+      switch (messageType) {
+        case 'conversation':
+        case 'extendedTextMessage': {
           const text =
             message.message.conversation ||
             message.message.extendedTextMessage.text;
@@ -31,11 +32,16 @@ export class WhatsappService {
               message: answer,
             });
           }
-        } else if (messageType === 'protocolMessage') {
-          console.log('erro de protocolo');
-        } else {
-          console.log('formato de mensagem ainda não suportado');
+          break;
         }
+
+        case 'protocolMessage':
+          console.log('erro de protocolo');
+          break;
+
+        default:
+          console.log('formato de mensagem ainda não suportado');
+          break;
       }
     });
   }
