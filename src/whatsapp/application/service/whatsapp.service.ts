@@ -1,11 +1,11 @@
-import { HttpAdapter } from 'src/shared/infra/http/http-adapter.service';
 import { ConnectToWhatsapp } from '../usecases/connect-to-whatsapp.usecase';
 import { OnMessage } from '../usecases/on-message.usecase';
 import { SendMessage } from '../usecases/send-message.usecase';
+import { ClaudeService } from 'src/shared/application/services/claude.service';
 
 export class WhatsappService {
   constructor(
-    private readonly httpAdapter: HttpAdapter,
+    private readonly claudeService: ClaudeService,
     private readonly connectToWhatsapp: ConnectToWhatsapp,
     private readonly onMessage: OnMessage,
     private readonly sendMessage: SendMessage,
@@ -48,7 +48,7 @@ export class WhatsappService {
 
   private async answerMessage(message: string): Promise<string> {
     try {
-      const response = await this.httpAdapter.post({
+      const response = await this.claudeService.post({
         url: '',
         data: { message: message },
       });

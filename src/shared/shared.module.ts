@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { HttpAdapter } from './infra/http/http-adapter.service';
-// import { AxiosHttpService } from './infra/http/http-axios/axios-http.service';
-import { ClaudeService } from './infra/http/http-axios/claude.service';
+import { AxiosHttpService } from './infra/http/http-axios/axios-http.service';
 
 @Module({
   providers: [
     {
       provide: HttpAdapter,
-      useClass: ClaudeService,
+      useClass: AxiosHttpService,
     },
   ],
   exports: [HttpAdapter],

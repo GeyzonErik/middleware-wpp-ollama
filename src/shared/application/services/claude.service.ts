@@ -3,7 +3,7 @@ import {
   HttpAdapter,
   HttpRequest,
   HttpResponse,
-} from '../http-adapter.service';
+} from 'src/shared/infra/http/http-adapter.service';
 
 export class ClaudeService implements HttpAdapter {
   anthropic = new Anthropic({});
