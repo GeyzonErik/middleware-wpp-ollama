@@ -15,7 +15,7 @@ export class WhatsappService {
     await this.connectToWhatsapp.execute();
 
     await this.onMessage.execute(async (message) => {
-      const messageType = Object.keys(message.message)[0] || null;
+      const messageType = Object.keys(message?.message ?? {})[0] || null;
 
       switch (messageType) {
         case 'conversation':
@@ -47,20 +47,15 @@ export class WhatsappService {
   }
 
   private async answerMessage(message: string): Promise<string> {
-    const modifiedMessage = `
-        Responda em português com frases curtas e diretas a seguinte menssagem,
-        NUNCA ultrapassando os 350 caracteres, mesmo se a mensagem pedir:
-        ${message}`;
+    try {
+      const response = await this.httpAdapter.post({
+        url: '',
+        data: { message: message },
+      });
 
-    const response = await this.httpAdapter.post({
-      url: 'http://localhost:11434/api/generate',
-      data: {
-        model: 'llama3.1',
-        prompt: modifiedMessage,
-        stream: false,
-      },
-    });
-
-    return response.data.response;
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
